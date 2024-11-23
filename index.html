@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Images</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #file-input {
+            display: none;
+        }
+        #upload-button, #select-button {
+            width: 400px;
+            height: 100px;
+            font-size: 48px;
+            margin: 50px;
+            cursor: pointer;
+        }
+        #progress-bar {
+            width: 100%;
+            background-color: #f3f3f3;
+            margin-top: 20px;
+        }
+        #progress {
+            width: 0;
+            height: 30px;
+            background-color: #4caf50;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload Images</h1>
+    <button id="select-button">点击选取</button>
+    <input type="file" id="file-input" multiple accept="image/*">
+    <button id="upload-button">开始上传</button>
+    
+    <div id="progress-bar">
+        <div id="progress">0%</div>
+    </div>
+
+    <script>
+        const selectButton = document.getElementById('select-button');
+        const fileInput = document.getElementById('file-input');
+        const uploadButton = document.getElementById('upload-button');
+        const progressBar = document.getElementById('progress');
+
+        selectButton.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        uploadButton.addEventListener('click', () => {
+            const files = Array.from(fileInput.files);
+            files.sort((a, b) => b.lastModified - a.lastModified);
+
+            const formData = new FormData();
+            files.forEach(file => formData.append('files[]', file));
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/upload', true);
+
+            xhr.upload.onprogress = (event) => {
+                if (event.lengthComputable) {
+                    const percentComplete = (event.loaded / event.total) * 100;
+                    progressBar.style.width = percentComplete + '%';
+                    progressBar.textContent = Math.round(percentComplete) + '%';
+                }
+            };
+
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    alert('上传成功');
+                    progressBar.style.width = '0%';
+                    progressBar.textContent = '0%';
+                } else {
+                    alert('上传失败');
+                }
+            };
+
+            xhr.onerror = () => {
+                alert('上传失败');
+            };
+
+            xhr.send(formData);
+        });
+    </script>
+</body>
+</html>
