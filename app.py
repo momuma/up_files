@@ -22,7 +22,7 @@ RESET = "\033[0m"
 # 使用双反斜杠来表示 C: 盘根目录路径，像这样：
 # my_path = r"c:\\"
 # 不使用原始字符串，用正斜杠来表示路径分隔符（在 Windows 下 Python 也是可以识别这种表示方式的），如下
-my_path = "C:/Users/x/WPSDrive/133759291/WPS云盘/23年安盛/物料盘点/GSS/2024-10自导出/RO00005796"
+my_path = "C:/Users/x/WPSDrive/"
 
 # 配置日志
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
