@@ -1,0 +1,1 @@
+完全使用GPT4生成的python小工具，使用os、logging、socket、flask、tkinter库，运行后可以选取上传后文件的保存目录，通过改变my_path的变量，可以改变运行后选取的默认路径。如不选择，默认保存到当前代码文件夹下uploads文件夹。
